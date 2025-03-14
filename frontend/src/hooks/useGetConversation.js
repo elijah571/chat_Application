@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify"; // Ensure toast is imported
+import toast from "react-hot-toast"
 
 export const useGetConversation = () => {
     const [loading, setLoading] = useState(false);

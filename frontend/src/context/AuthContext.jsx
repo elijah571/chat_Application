@@ -13,13 +13,14 @@ export const AuthContextProvider = ({ children }) => {
   // State to hold the authUser, loaded from localStorage or set to null
   const [authUser, setAuthUser] = useState(() => {
     const storedUser = localStorage.getItem("chat-user");
+    console.log("Stored user from localStorage:", storedUser); // Debugging line
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
   // Effect to listen for changes in the authUser state and persist to localStorage
   useEffect(() => {
     if (authUser) {
-      // Save the user object to localStorage when the user is set
+      console.log("Saving user to localStorage:", authUser);  // Debugging line
       localStorage.setItem("chat-user", JSON.stringify(authUser));
     } else {
       // Remove user data from localStorage when no user is set (e.g., on logout)

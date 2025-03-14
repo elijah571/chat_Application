@@ -1,13 +1,20 @@
-import React from 'react';
-import useConversation from '../zustand/useConversation';
+import React from "react";
+import useConversation from "../zustand/useConversation";
+import { useSocketContext } from "../context/SocketContext";
 
 const Conversation = ({ conversation, lastIndex }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
+  const { onlineUsers } = useSocketContext(); // Get the online users from SocketContext
+
+  // Check if the current conversation's user is online
+  const isOnline = onlineUsers.includes(conversation._id);
 
   const handleClick = () => {
     setSelectedConversation(conversation);
   };
+
+  console.log("Online Users:", onlineUsers);  // Debugging line
 
   return (
     <>
@@ -17,9 +24,9 @@ const Conversation = ({ conversation, lastIndex }) => {
         }`}
         onClick={handleClick}
       >
-        <div className="avatar avatar-online">
+        <div className={`avatar ${isOnline ? "avatar-online" : ""}`}>
           <div className="w-12 rounded-full">
-            <img src={conversation.profle}  />
+            <img src={conversation.profle} alt={conversation.fullName} />
           </div>
         </div>
         <div className="flex flex-col flex-1">

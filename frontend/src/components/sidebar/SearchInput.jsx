@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import useConversation from '../../zustand/useConversation';
 import { useGetConversation } from '../../hooks/useGetConversation';
-import { toast } from 'react-toastify';
+import toast from "react-hot-toast"
 
 const SearchInput = () => {
   const [search, setSearch] = useState("")

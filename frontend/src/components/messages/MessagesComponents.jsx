@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import Message from '../Message';
 import { useGetMessages } from '../../hooks/useGetMessages';
 import MessageSkeleton from '../skeleton/MessageSkeleton';
+import { useListenMessages } from '../../hooks/useListenMessages';
 
 const MessagesComponents = () => {
   const { messages, loading } = useGetMessages();
   let lastMessageRef =useRef()
+  useListenMessages()
   useEffect(() => {
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({behavior: "smooth"}
@@ -13,6 +15,7 @@ const MessagesComponents = () => {
       )
     }, 1000)
   }, [messages])
+
   return (
     <div className='px-4 flex-1 overflow-auto h-full max-h-[500px]'>
       {/* Show skeleton loaders while loading */}
