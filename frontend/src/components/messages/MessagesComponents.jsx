@@ -12,7 +12,7 @@ const MessagesComponents = () => {
 
       )
     }, 1000)
-  })
+  }, [messages])
   return (
     <div className='px-4 flex-1 overflow-auto h-full max-h-[500px]'>
       {/* Show skeleton loaders while loading */}
@@ -20,7 +20,10 @@ const MessagesComponents = () => {
 
       {/* Show messages if available */}
       {!loading && messages.length > 0 && messages.map((message) => (
-        <Message key={message._id} message={message} ref={lastMessageRef} />
+        <div  key={message._id} ref={lastMessageRef}>
+           <Message message={message}  />
+        </div>
+       
       ))}
 
       {/* Show empty state if there are no messages */}
