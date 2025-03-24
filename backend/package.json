@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js",
-    "build": "npm install && cd frontend && npm install && npx vite build"
+    "dev": "nodemon server.js"
+   
   },
   "type": "module",
   "keywords": [],
