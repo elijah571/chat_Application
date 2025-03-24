@@ -3,9 +3,9 @@ import Conversation from "../Conversation";
 import { useGetConversation } from "../../hooks/useGetConversation";
 
 const Conversations = () => {
-  const { loading, conversations } = useGetConversation(); // Fetch conversations
+  const { loading, conversations } = useGetConversation();
 
-  console.log("CONVERSATIONS:", conversations);  // Debugging line
+  console.log("📢 Conversations List:", conversations);
 
   return (
     <div className="py-2 flex flex-col overflow-auto">

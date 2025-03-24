@@ -42,7 +42,7 @@ export const createUser = async (req, res) => {
     }
 }
 //Login user
-export const LoginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     const { userName, password } = req.body;
     try {
         const user = await User.findOne({ userName });

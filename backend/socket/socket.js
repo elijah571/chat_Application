@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import http from 'http';
-import express from 'express';
+import http from "http";
+import express from "express";
 
 const app = express();
 app.use(express.json());
@@ -9,40 +9,42 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: ["http://localhost:5173"], 
-        methods: ['POST', 'GET', 'DELETE', 'PUT'],
-    }
+        methods: ["POST", "GET", "DELETE", "PUT"],
+    },
 });
 
 const userSocketMap = {};
 
 // Function to get the socket id of a user
-export const getReceiverSocketId = (receiverId) => {
-    return userSocketMap[receiverId];
-};
+export const getReceiverSocketId = (receiverId) => userSocketMap[receiverId];
 
+/**
+ * Socket.io Connection Handling
+ */
 io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
+    console.log("A user connected:", socket.id);
 
-    // Get the userId from the query params
+    // Get userId from query params
     const userId = socket.handshake.query.userId;
-    console.log("Received userId:", userId);
-
-    if (userId && userId !== "undefined") {
-        // Store the userId on the socket object itself
+    if (userId && userId !== "undefined" && userId.trim() !== "") {
+        // Store userId in a variable (since socket properties are lost on disconnect)
         socket.userId = userId;
 
-        // Add the user to the userSocketMap
+        // Map userId to socket ID
         userSocketMap[userId] = socket.id;
+
+        console.log(`User ${userId} is now online with socket ID: ${socket.id}`);
     }
 
-    // Emit the current list of online users
+    // Emit the updated list of online users
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
     socket.on("disconnect", () => {
-        console.log("user disconnected", socket.id);
+        console.log("User disconnected:", socket.id);
 
-        // Remove user from the map
-        delete userSocketMap[socket.userId];
+        if (socket.userId) {
+            delete userSocketMap[socket.userId]; // Remove from the map
+        }
 
         // Emit the updated list of online users
         io.emit("getOnlineUsers", Object.keys(userSocketMap));
